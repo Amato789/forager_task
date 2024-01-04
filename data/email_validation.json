@@ -1,0 +1,62 @@
+[
+    {
+        "email": "maximsidorchuk@gmail.com",
+        "data": {
+            "status": "valid",
+            "result": "deliverable",
+            "_deprecation_notice": "Using result is deprecated, use status instead",
+            "score": 88,
+            "email": "maximsidorchuk@gmail.com",
+            "regexp": true,
+            "gibberish": false,
+            "disposable": false,
+            "webmail": true,
+            "mx_records": true,
+            "smtp_server": true,
+            "smtp_check": true,
+            "accept_all": false,
+            "block": false,
+            "sources": []
+        }
+    },
+    {
+        "email": "maximsidorchuk@gmail.com",
+        "data": {
+            "status": "valid",
+            "result": "deliverable",
+            "_deprecation_notice": "Using result is deprecated, use status instead",
+            "score": 88,
+            "email": "maximsidorchuk@gmail.com",
+            "regexp": true,
+            "gibberish": false,
+            "disposable": false,
+            "webmail": true,
+            "mx_records": true,
+            "smtp_server": true,
+            "smtp_check": true,
+            "accept_all": false,
+            "block": false,
+            "sources": []
+        }
+    },
+    {
+        "email": "maximsidorchuk@gmail.com",
+        "data": {
+            "status": "valid",
+            "result": "deliverable",
+            "_deprecation_notice": "Using result is deprecated, use status instead",
+            "score": 88,
+            "email": "maximsidorchuk@gmail.com",
+            "regexp": true,
+            "gibberish": false,
+            "disposable": false,
+            "webmail": true,
+            "mx_records": true,
+            "smtp_server": true,
+            "smtp_check": true,
+            "accept_all": false,
+            "block": false,
+            "sources": []
+        }
+    }
+]
