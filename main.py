@@ -1,17 +1,11 @@
-from task_factory import TaskFactory
+from src.task_factory import TaskFactory, SaveFactory
 
 
-def handle(task_name: str, object_name: str) -> None:
-    """
-    Start task.
-
-    :param task_name: str
-    :param object_name: str
-    :return: None
-    """
-    task = TaskFactory.get_task(task_name, object_name)
-    task.start_task()
+def handle(task_name: str, task_args: dict, save_strategy: str) -> None:
+    save_service = SaveFactory.get_save_service(save_strategy)
+    task = TaskFactory.get_task(task_name, task_args, save_service)
+    task.execute()
 
 
 if __name__ == '__main__':
-    handle('email_verification', 'maximsidorchuk@gmail.com')
+    handle('email_verification', {'email': 'maximsidorchuk@gmail.com'}, 'to_file')
