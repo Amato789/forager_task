@@ -1,10 +1,11 @@
 import json
 from abc import ABC, abstractmethod
+from services.save_service import SaveService
 
 
 class Task(ABC):
     task_args: dict
-    save_service: dict  # TODO
+    save_service: SaveService
 
     def __init__(self, task_args, save_service):
         self.task_args = task_args

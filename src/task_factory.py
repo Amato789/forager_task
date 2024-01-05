@@ -1,14 +1,14 @@
 from src.email_verification import EmailVerification
 from src.domain_search import DomainSearch
-from services.save_service import SaveToJson
+from services.save_service import SaveService
 
 
 class SaveFactory:
 
     @staticmethod
     def get_save_service(save_strategy):
-        if save_strategy == 'to_file':
-            return SaveToJson
+        if save_strategy == 'to_db':
+            return SaveService()
         else:
             raise Exception("Not supported retailer")
 

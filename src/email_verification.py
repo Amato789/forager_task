@@ -16,4 +16,4 @@ class EmailVerification(Task):
 
     def execute(self):
         data = HunterApiService().email_verify(self.email)
-        self.save_data(data=data)
+        self.save_service.db_add_data(email=data['email'], status=data['status'])

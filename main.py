@@ -8,4 +8,4 @@ def handle(task_name: str, task_args: dict, save_strategy: str) -> None:
 
 
 if __name__ == '__main__':
-    handle('email_verification', {'email': 'maximsidorchuk@gmail.com'}, 'to_file')
+    handle('email_verification', {'email': 'miannahabibi@gmail.com'}, 'to_db')
