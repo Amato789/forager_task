@@ -1,6 +1,9 @@
 from src.email_verification import EmailVerification
 from src.domain_search import DomainSearch
-from services.save_service import SaveService
+from src.get_records_task import GetRecordsTask
+from src.delete_records_task import DeleteRecordTask
+from services.saveservice_sqlite import SQLiteSaveService
+from services.saveservice_json import JSONSaveService
 
 
 class SaveFactory:
@@ -8,7 +11,9 @@ class SaveFactory:
     @staticmethod
     def get_save_service(save_strategy):
         if save_strategy == 'to_db':
-            return SaveService()
+            return SQLiteSaveService()
+        elif save_strategy == 'to_file':
+            return JSONSaveService()
         else:
             raise Exception("Not supported retailer")
 
@@ -16,10 +21,14 @@ class SaveFactory:
 class TaskFactory:
 
     @staticmethod
-    def get_task(task_name, task_args, save_service):
-        if task_name == 'email_verification':
+    def get_task(command, task_args, save_service):
+        if command == 'email_verification':
             return EmailVerification(task_args, save_service)
-        elif task_name == 'domain_search':
+        elif command == 'domain_search':
             return DomainSearch(task_args, save_service)
+        elif command == 'get_records':
+            return GetRecordsTask(task_args, save_service)
+        elif command == 'delete_records':
+            return DeleteRecordTask(task_args, save_service)
         else:
             raise Exception("Not supported retailer")
