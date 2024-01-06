@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
 
-class SaveService(ABC):
-    db_name: str
+class StorageService(ABC):
+    # db_name: str
 
     @abstractmethod
     def add_record(self, data_args):
@@ -13,7 +13,7 @@ class SaveService(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_record(self):
+    def get_record(self, email):
         raise NotImplementedError
 
     @abstractmethod

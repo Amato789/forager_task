@@ -1,13 +1,13 @@
-from src.task import Task
-from services.hunter_api_service import HunterApiService
+from src.task_abstract import Task
+from src.api_services.hunter_api_service import HunterApiService
 
 
 class DomainSearch(Task):
     domain: str
     task_name = 'domain_search'
 
-    def __init__(self, task_args, save_service):
-        super().__init__(task_args, save_service)
+    def __init__(self, task_args, storage_service):
+        super().__init__(task_args, storage_service)
         self.domain = task_args['domain']
 
     def validate_task_argument(self):

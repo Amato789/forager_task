@@ -1,9 +1,9 @@
 import sqlite3
 from datetime import datetime
-from services.save_service import SaveService
+from src.storage_service_abstract import StorageService
 
 
-class SQLiteSaveService(SaveService):
+class SQLiteSaveService(StorageService):
     db_name = 'forager.db'
 
     def __init__(self):
@@ -48,17 +48,17 @@ class SQLiteSaveService(SaveService):
                 self.cursor.close()
                 print('Values insert successfully')
             except sqlite3.Error as error:
-                print("DB connection error", error)
+                print('DB connection error', error)
             finally:
                 if (self.connection):
                     self.connection.close()
-                    print("Connection closed")
+                    print('Connection closed')
 
     def update_record(self, data_args):
         try:
             self.cursor.execute(
                 'INSERT INTO task_progress (task_name, date, status) VALUES (?, ?, ?)',
-                ("email_verification", datetime.now(), "update_record")
+                ('email_verification', datetime.now(), 'update_record')
             )
             self.cursor.execute(
                 'UPDATE email_status SET status = ? WHERE email = ?',
@@ -68,45 +68,45 @@ class SQLiteSaveService(SaveService):
             self.cursor.close()
             print('Values updated successfully')
         except sqlite3.Error as error:
-            print("DB connection error", error)
+            print('DB connection error', error)
         finally:
             if (self.connection):
                 self.connection.close()
-                print("Connection closed")
+                print('Connection closed')
 
-    def get_record(self):
+    def get_record(self, email):
         try:
-            self.cursor.execute('SELECT * FROM email_status')
+            self.cursor.execute('SELECT * FROM email_status WHERE email = ?', (email, ))
             emails = self.cursor.fetchall()
             for email in emails:
                 print(email)
 
             self.cursor.execute(
                 'INSERT INTO task_progress (task_name, date, status) VALUES (?, ?, ?)',
-                ("email_verification", datetime.now(), "get_record")
+                ('email_verification', datetime.now(), 'get_record')
             )
             self.connection.commit()
             self.cursor.close()
         except sqlite3.Error as error:
-            print("DB connection error", error)
+            print('DB connection error', error)
         finally:
             if (self.connection):
                 self.connection.close()
-                print("Connection closed")
+                print('Connection closed')
 
     def delete_record(self, email):
         try:
             self.cursor.execute('DELETE FROM email_status WHERE email = ?', (email,))
             self.cursor.execute(
                 'INSERT INTO task_progress (task_name, date, status) VALUES (?, ?, ?)',
-                ("email_verification", datetime.now(), "delete_record")
+                ('email_verification', datetime.now(), 'delete_record')
             )
             self.connection.commit()
             self.cursor.close()
-            print(f"Email - {email} deleted")
+            print(f'Email - {email} deleted')
         except sqlite3.Error as error:
-            print("DB connection error", error)
+            print('DB connection error', error)
         finally:
             if (self.connection):
                 self.connection.close()
-                print("Connection closed")
+                print('Connection closed')
