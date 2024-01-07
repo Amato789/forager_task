@@ -36,10 +36,3 @@ def handle(command: str, command_args: dict, save_strategy: str) -> None:
     storage_service = SaveFactory.get_save_service(save_strategy)
     task = CommandFactory.get_task(command, command_args, storage_service)
     task.execute()
-
-
-if __name__ == '__main__':
-    handle('email_verification', {'email': 'miannahabibi@gmail.com'}, 'to_db')
-    # handle('get_record', {'email': 'miannahabibi@gmail.com'}, 'to_file')
-    # handle('delete_record', {'email': 'miannahabibi@gmail.com'}, 'to_file')
-    # handle('domain_search', {'domain': 'stripe.com'}, 'to_file')
