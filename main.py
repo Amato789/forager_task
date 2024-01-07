@@ -39,7 +39,7 @@ def handle(command: str, command_args: dict, save_strategy: str) -> None:
 
 
 if __name__ == '__main__':
-    handle('email_verification', {'email': 'maximsidorchuk@gmail.com'}, 'to_db')
-    # handle('get_record', {'email': 'miannahabibi@gmail.com'}, 'to_db')
-    # handle('delete_record', {'email': 'maximsidorchuk@gmail.com'}, 'to_file')
+    handle('email_verification', {'email': 'miannahabibi@gmail.com'}, 'to_db')
+    # handle('get_record', {'email': 'miannahabibi@gmail.com'}, 'to_file')
+    # handle('delete_record', {'email': 'miannahabibi@gmail.com'}, 'to_file')
     # handle('domain_search', {'domain': 'stripe.com'}, 'to_file')
