@@ -59,6 +59,8 @@ class SQLiteSaveService(StorageService):
             self.connection.commit()
         except sqlite3.Error as error:
             print('DB connection error', error)
+        except Exception as error:
+            print(error, type(error))
 
     def add_record(self, data_args):
         """
@@ -84,9 +86,11 @@ class SQLiteSaveService(StorageService):
                 )
                 self.connection.commit()
                 self.cursor.close()
-                return 'Values insert successfully'
+                return {'status': 'success', 'data': None}
             except sqlite3.Error as error:
-                print('DB connection error', error)
+                return {'status': 'error', 'data': type(error)}
+            except Exception as error:
+                return {'status': 'error', 'data': type(error)}
             finally:
                 if (self.connection):
                     self.connection.close()
@@ -110,9 +114,11 @@ class SQLiteSaveService(StorageService):
             )
             self.connection.commit()
             self.cursor.close()
-            return 'Values updated successfully'
+            return {'status': 'success', 'data': None}
         except sqlite3.Error as error:
-            print('DB connection error', error)
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}
         finally:
             if (self.connection):
                 self.connection.close()
@@ -128,9 +134,11 @@ class SQLiteSaveService(StorageService):
         try:
             self.cursor.execute('SELECT * FROM email_status WHERE email = ?', (email, ))
             emails = self.cursor.fetchall()
-            for email in emails:
-                return email
-
+            if emails:
+                for email in emails:
+                    return {'status': 'success', 'data': email}
+            else:
+                return {'status': 'success', 'data': None}
             self.cursor.execute(
                 'INSERT INTO task_progress (task_name, date, status) VALUES (?, ?, ?)',
                 ('email_verification', datetime.now(), 'get_record'),
@@ -138,7 +146,9 @@ class SQLiteSaveService(StorageService):
             self.connection.commit()
             self.cursor.close()
         except sqlite3.Error as error:
-            print('DB connection error', error)
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}
         finally:
             if (self.connection):
                 self.connection.close()
@@ -159,9 +169,11 @@ class SQLiteSaveService(StorageService):
             )
             self.connection.commit()
             self.cursor.close()
-            return f'Email - {email} deleted'
+            return {'status': 'success', 'data': None}
         except sqlite3.Error as error:
-            print('DB connection error', error)
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}
         finally:
             if (self.connection):
                 self.connection.close()

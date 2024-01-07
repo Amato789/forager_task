@@ -56,9 +56,13 @@ class JSONSaveService(StorageService):
 
             with open(f'{self.file_name}', 'w', encoding='utf8') as outfile:
                 json.dump(data_from_file, outfile, indent=4, ensure_ascii=False)
-        except FileNotFoundError:
+                return {'status': 'success', 'data': None}
+        except FileNotFoundError as error:
             with open(f'{self.file_name}', 'w', encoding='utf8') as new_file:
                 json.dump([new_data], new_file, indent=4, ensure_ascii=False)
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}
 
     def update_record(self, data_args: dict):
         """
@@ -82,8 +86,10 @@ class JSONSaveService(StorageService):
                 for i in data_from_file:
                     if i['email'] == email:
                         return i
-        except FileNotFoundError:
-            raise FileNotFoundError
+        except FileNotFoundError as error:
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}
 
     def delete_record(self, email: str):
         """
@@ -105,11 +111,15 @@ class JSONSaveService(StorageService):
 
                 if data_index is None:
                     print('No found email in file')
+                    return {'status': 'success', 'data': None}
                 else:
                     del data_from_file[data_index]
                     print('Data deleted')
 
             with open(f'{self.file_name}', 'w', encoding='utf8') as outfile:
                 json.dump(data_from_file, outfile, indent=4, ensure_ascii=False)
-        except FileNotFoundError:
-            raise FileNotFoundError
+                return {'status': 'success', 'data': None}
+        except FileNotFoundError as error:
+            return {'status': 'error', 'data': type(error)}
+        except Exception as error:
+            return {'status': 'error', 'data': type(error)}

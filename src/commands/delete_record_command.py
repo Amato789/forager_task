@@ -56,6 +56,6 @@ class DeleteRecordCommand(Command):
 
         Return the dict with the status of execution.
         """
-        self.storage_service.delete_record(self.email)
-        print({'command': self.command_name, 'status': 'success', 'data': None})
-        return {'command': self.command_name, 'status': 'success', 'data': None}
+        response = self.storage_service.delete_record(self.email)
+        print({'command': self.command_name, 'status': response['status'], 'data': response['data']})
+        return {'command': self.command_name, 'status': response['status'], 'data': response['data']}

@@ -57,5 +57,6 @@ class GetRecordCommand(Command):
         Return the dict with the status of execution.
         """
         response = self.storage_service.get_record(self.email)
-        print({'command': self.command_name, 'status': 'success', 'data': response})
-        return {'command': self.command_name, 'status': 'success', 'data': response}
+        # print(response)
+        print({'command': self.command_name, 'status': response['status'], 'data': response['data']})
+        return {'command': self.command_name, 'status': response['status'], 'data': response['data']}

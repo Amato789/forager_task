@@ -57,7 +57,7 @@ class EmailVerification(Command):
 
         Saved response in your storage, what was defined in the save_strategy and return the status of your request.
         """
-        response = HunterApiService().email_verify(self.email)
-        self.storage_service.add_record(response)
-        print({'command': self.command_name, 'status': 'success', 'data': response})
-        return {'command': self.command_name, 'status': 'success', 'data': response}
+        response_from_api = HunterApiService().email_verify(self.email)
+        response = self.storage_service.add_record(response_from_api)
+        print({'command': self.command_name, 'status': response['status'], 'data': response['data']})
+        return {'command': self.command_name, 'status': response['status'], 'data': response['data']}
