@@ -85,7 +85,7 @@ class JSONSaveService(StorageService):
                 data_from_file = json.load(file_email_verification)
                 for i in data_from_file:
                     if i['email'] == email:
-                        return i
+                        return {'status': 'success', 'data': i}
         except FileNotFoundError as error:
             return {'status': 'error', 'data': type(error)}
         except Exception as error:
