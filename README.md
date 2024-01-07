@@ -7,4 +7,4 @@
 
 ## About
 
-Scraper for getting prices of dairy products from two sources: https://www.atbmarket.com and https://novus.online.
+Test task for the Junior Python Developer position.
