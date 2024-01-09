@@ -20,7 +20,7 @@ Test task for the Junior Python Developer position.
     import forager_task
 
     result = forager_task.handle_command(
-        command=''email_verification', 
+        command='email_verification', 
         command_args={'email': 'YOUR_EMAIL'}, 
         save_strategy='to_file'
         api_key='YOUR_API_KEY_FROM_HUNTER.IO'
