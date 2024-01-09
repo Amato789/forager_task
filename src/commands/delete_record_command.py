@@ -1,4 +1,14 @@
+"""
+This script is used to execute delete command.
+
+Author: Maksym Sydorchuk
+Data: 8/01/2024
+"""
+
+import re
+
 from src.command_abstract import Command
+from src.storage_service_abstract import StorageService
 
 
 class DeleteRecordCommand(Command):
@@ -27,7 +37,7 @@ class DeleteRecordCommand(Command):
     email: str
     command_name = 'delete_record'
 
-    def __init__(self, command_args, storage_service):
+    def __init__(self, command_args: dict, storage_service: StorageService) -> None:
         """
         Create a DeleteRecordCommand.
 
@@ -46,9 +56,11 @@ class DeleteRecordCommand(Command):
         Causes an exception if no email was specified.
         """
         if not self.command_args.get('email'):
-            raise Exception('No email was provided')
+            raise TypeError('No email was provided')
+        if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b', self.command_args['email']):
+            raise ValueError('Invalid email address')
 
-    def execute(self):
+    def execute(self) -> dict:
         """
         Execute current command and delete email from your storage.
 
@@ -57,5 +69,4 @@ class DeleteRecordCommand(Command):
         Return the dict with the status of execution.
         """
         response = self.storage_service.delete_record(self.email)
-        print({'command': self.command_name, 'status': response['status'], 'data': response['data']})
         return {'command': self.command_name, 'status': response['status'], 'data': response['data']}

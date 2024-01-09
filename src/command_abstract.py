@@ -1,3 +1,10 @@
+"""
+This script is used to create an abstract class Command.
+
+Author: Maksym Sydorchuk
+Data: 8/01/2024
+"""
+
 from abc import ABC, abstractmethod
 
 from src.storage_service_abstract import StorageService
@@ -24,7 +31,7 @@ class Command(ABC):
     command_args: dict
     storage_service: StorageService
 
-    def __init__(self, command_args, storage_service):
+    def __init__(self, command_args: dict, storage_service: StorageService) -> None:
         """
         Create an abstract Command.
 
@@ -36,7 +43,7 @@ class Command(ABC):
         self.validate_command_argument()
 
     @abstractmethod
-    def validate_command_argument(self):
+    def validate_command_argument(self) -> None:
         """
         Abstract method to validate command argument.
 
@@ -45,7 +52,7 @@ class Command(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def execute(self):
+    def execute(self) -> dict:
         """
         Abstract method to execute command.
 

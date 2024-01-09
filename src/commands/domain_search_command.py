@@ -1,5 +1,15 @@
-from src.command_abstract import Command
+"""
+This script is used to execute domain search command.
+
+Author: Maksym Sydorchuk
+Data: 8/01/2024
+"""
+
+import re
+
 from src.api_services.hunter_api_service import HunterApiService
+from src.command_abstract import Command
+from src.storage_service_abstract import StorageService
 
 
 class DomainSearch(Command):
@@ -26,9 +36,10 @@ class DomainSearch(Command):
     """
 
     domain: str
+    api_key: str
     command_name = 'domain_search'
 
-    def __init__(self, command_args, storage_service):
+    def __init__(self, command_args: dict, storage_service: StorageService, api_key: str) -> None:
         """
         Create a DomainSearch command.
 
@@ -37,8 +48,9 @@ class DomainSearch(Command):
         """
         super().__init__(command_args, storage_service)
         self.domain = command_args['domain']
+        self.api_key = api_key
 
-    def validate_command_argument(self):
+    def validate_command_argument(self) -> None:
         """
         Check that a domain is provided in the command argument.
 
@@ -47,9 +59,11 @@ class DomainSearch(Command):
         Causes an exception if no domain was specified.
         """
         if not self.command_args.get('domain'):
-            raise Exception('No email was provided')
+            raise ValueError('No email was provided')
+        if not re.fullmatch(r'^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,}$', self.command_args['domain']):
+            raise ValueError('Invalid domain name')
 
-    def execute(self):
+    def execute(self) -> dict:
         """
         Execute current command.
 
@@ -57,6 +71,5 @@ class DomainSearch(Command):
 
         Return all the email addresses found using one given domain name, with sources.
         """
-        response = HunterApiService().domain_search(self.domain)
-        print({'command': self.command_name, 'status': 'success', 'data': response})
+        response = HunterApiService().domain_search(self.domain, self.api_key)
         return {'command': self.command_name, 'status': 'success', 'data': response}

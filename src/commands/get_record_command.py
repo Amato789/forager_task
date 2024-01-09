@@ -1,4 +1,14 @@
+"""
+This script is used to execute get records command.
+
+Author: Maksym Sydorchuk
+Data: 8/01/2024
+"""
+
+import re
+
 from src.command_abstract import Command
+from src.storage_service_abstract import StorageService
 
 
 class GetRecordCommand(Command):
@@ -27,7 +37,7 @@ class GetRecordCommand(Command):
     email: str
     command_name = 'get_records'
 
-    def __init__(self, command_args, storage_service):
+    def __init__(self, command_args: dict, storage_service: StorageService) -> None:
         """
         Create a GetRecordCommand.
 
@@ -37,7 +47,7 @@ class GetRecordCommand(Command):
         super().__init__(command_args, storage_service)
         self.email = command_args['email']
 
-    def validate_command_argument(self):
+    def validate_command_argument(self) -> None:
         """
         Check that an email address is provided in the command argument.
 
@@ -46,9 +56,11 @@ class GetRecordCommand(Command):
         Causes an exception if no email was specified.
         """
         if not self.command_args.get('email'):
-            raise Exception('No email was provided')
+            raise ValueError('No email was provided')
+        if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b', self.command_args['email']):
+            raise ValueError('Invalid email address')
 
-    def execute(self):
+    def execute(self) -> dict:
         """
         Execute current command and get information about current email from your storage.
 
@@ -57,6 +69,4 @@ class GetRecordCommand(Command):
         Return the dict with the status of execution.
         """
         response = self.storage_service.get_record(self.email)
-        # print(response)
-        print({'command': self.command_name, 'status': response['status'], 'data': response['data']})
         return {'command': self.command_name, 'status': response['status'], 'data': response['data']}

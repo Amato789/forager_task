@@ -1,7 +1,15 @@
+"""
+This script is used to take command, arguments of this command, type of storage the data and return the result.
+
+Author: Maksym Sydorchuk
+Data: 8/01/2024
+"""
+
+from config import HUNTER_API_KEY
 from src.command_factory import CommandFactory, SaveFactory
 
 
-def handle(command: str, command_args: dict, save_strategy: str) -> None:
+def handle_command(command: str, command_args: dict, save_strategy: str, api_key: str) -> dict:
     """
     Take command, arguments of this command, type of storage the data and return the result.
 
@@ -26,13 +34,16 @@ def handle(command: str, command_args: dict, save_strategy: str) -> None:
 
         'to_file' - JSON is used for data storage
 
+    :param api_key:
+        'API_KEY' - Your api key to use api service https://hunter.io
+
     :return:
-        - 'email_verification' - saved response in your source, what was defined in the save_strategy
+        - 'email_verification' - return dict
         - 'domain_search' - return dict
         - 'get_record' - return dict
-        - 'delete_record' - return None
+        - 'delete_record' - return dict
 
     """
-    storage_service = SaveFactory.get_save_service(save_strategy)
-    task = CommandFactory.get_task(command, command_args, storage_service)
-    task.execute()
+    storage_service = SaveFactory().get_save_service(save_strategy)
+    task = CommandFactory().get_task(command, command_args, storage_service, api_key=HUNTER_API_KEY)
+    return task.execute()
